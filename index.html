@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poojari Shiva — Data Analyst Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0f0f; --ink-2: #3a3a3a; --ink-3: #7a7a7a;
+    --paper: #f5f2ec; --paper-2: #edeae2;
+    --accent: #1a56db; --border: rgba(15,15,15,0.12);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 3rem; background: var(--paper); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--ink-3); letter-spacing: 0.04em; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { font-size: 13px; color: var(--ink-2); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 8rem 3rem 4rem; max-width: 900px; margin: 0 auto; }
+  .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.6s ease 0.1s forwards; }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(3rem, 7vw, 5.5rem); line-height: 1.05; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.6s ease 0.2s forwards; }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub { font-size: 1.1rem; color: var(--ink-2); max-width: 520px; margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.6s ease 0.3s forwards; }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.6s ease 0.4s forwards; }
+  .tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 5px 12px; border: 1px solid var(--border); border-radius: 3px; color: var(--ink-2); background: var(--paper-2); }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.6s ease 0.5s forwards; }
+  .btn-primary { display: inline-flex; align-items: center; gap: 6px; background: var(--ink); color: var(--paper); padding: 0.75rem 1.5rem; border-radius: 4px; font-size: 14px; font-weight: 500; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-outline { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border); color: var(--ink-2); padding: 0.75rem 1.5rem; border-radius: 4px; font-size: 14px; text-decoration: none; transition: border-color 0.2s, color 0.2s, transform 0.15s; }
+  .btn-outline:hover { border-color: var(--ink); color: var(--ink); transform: translateY(-1px); }
+  .stats { background: var(--ink); color: var(--paper); padding: 2.5rem 3rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+  .stat-item { text-align: center; }
+  .stat-num { font-family: 'DM Serif Display', serif; font-size: 2.2rem; display: block; margin-bottom: 4px; }
+  .stat-label { font-size: 12px; color: rgba(245,242,236,0.5); letter-spacing: 0.05em; }
+  section { padding: 6rem 3rem; max-width: 900px; margin: 0 auto; }
+  .section-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-3); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .section-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 3rem; line-height: 1.15; }
+  .projects-grid { display: flex; flex-direction: column; gap: 2rem; }
+  .project-card { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: white; transition: transform 0.2s, box-shadow 0.2s; }
+  .project-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+  .project-card.featured { border-color: var(--accent); border-width: 2px; }
+  .card-header { padding: 2rem 2rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .card-header-left { flex: 1; }
+  .card-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-3); margin-bottom: 6px; }
+  .card-title { font-family: 'DM Serif Display', serif; font-size: 1.4rem; margin-bottom: 8px; }
+  .tool-badge { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; }
+  .badge-pbi { background: #fff3e0; color: #e65100; border: 1px solid #ffccbc; }
+  .badge-py { background: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9; }
+  .badge-sql { background: #e3f2fd; color: #0d47a1; border: 1px solid #bbdefb; }
+  .featured-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 4px 10px; background: var(--accent); color: white; border-radius: 3px; white-space: nowrap; }
+  .card-body { padding: 1.5rem 2rem; }
+  .card-desc { font-size: 14px; color: var(--ink-2); line-height: 1.7; margin-bottom: 1.25rem; }
+  .card-kpis { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.25rem; }
+  .kpi-pill { font-size: 12px; padding: 4px 10px; background: var(--paper-2); border-radius: 3px; color: var(--ink-2); }
+  .kpi-pill strong { color: var(--ink); }
+  .card-insights { background: var(--paper); border-left: 3px solid var(--accent); padding: 0.75rem 1rem; margin-bottom: 1.25rem; border-radius: 0 4px 4px 0; }
+  .card-insights p { font-size: 13px; color: var(--ink-2); margin-bottom: 4px; }
+  .card-insights p:last-child { margin-bottom: 0; }
+  .card-insights strong { color: var(--ink); }
+  .card-footer { padding: 1rem 2rem; border-top: 1px solid var(--border); display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+  .card-link { font-size: 13px; color: var(--accent); text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 4px; }
+  .card-link:hover { text-decoration: underline; }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+  .skill-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; }
+  .skill-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+  .skill-name { font-weight: 500; font-size: 14px; margin-bottom: 4px; }
+  .skill-level { font-size: 12px; color: var(--ink-3); margin-bottom: 10px; }
+  .skill-bar { height: 3px; background: var(--paper-2); border-radius: 2px; overflow: hidden; }
+  .skill-fill { height: 100%; background: var(--accent); border-radius: 2px; }
+  .exp-item { display: grid; grid-template-columns: 140px 1fr; gap: 2rem; margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border); }
+  .exp-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .exp-date { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-3); padding-top: 4px; }
+  .exp-role { font-weight: 500; font-size: 16px; margin-bottom: 4px; }
+  .exp-company { font-size: 14px; color: var(--accent); margin-bottom: 0.75rem; }
+  .exp-points { list-style: none; }
+  .exp-points li { font-size: 14px; color: var(--ink-2); padding-left: 1rem; position: relative; margin-bottom: 6px; line-height: 1.6; }
+  .exp-points li::before { content: '—'; position: absolute; left: 0; color: var(--ink-3); }
+  .contact-box { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 3rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; }
+  .contact-box h2 { font-family: 'DM Serif Display', serif; font-size: 2rem; margin-bottom: 0.5rem; }
+  .contact-box p { font-size: 14px; color: rgba(245,242,236,0.6); }
+  .contact-links { display: flex; flex-direction: column; gap: 0.75rem; }
+  .contact-link { display: flex; align-items: center; gap: 8px; color: var(--paper); text-decoration: none; font-size: 14px; opacity: 0.8; transition: opacity 0.2s; }
+  .contact-link:hover { opacity: 1; }
+  footer { text-align: center; padding: 2rem; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-3); border-top: 1px solid var(--border); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 640px) {
+    nav { padding: 1rem 1.5rem; } .nav-links { display: none; }
+    .hero { padding: 6rem 1.5rem 3rem; } section { padding: 4rem 1.5rem; }
+    .stats { grid-template-columns: repeat(2, 1fr); padding: 2rem 1.5rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; } .contact-box { padding: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">shiva-00 / portfolio</div>
+  <div class="nav-links">
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<div style="max-width:900px; margin:0 auto;">
+  <div class="hero">
+    <div class="hero-eyebrow">📍 Bangalore, India · Open to work</div>
+    <h1>Poojari<br><em>Shiva</em></h1>
+    <p class="hero-sub">Data Analyst with 2.9 years of experience turning raw operational data into clear, actionable insights. Specialised in Power BI, Python, SQL and Advanced Excel.</p>
+    <div class="hero-tags">
+      <span class="tag">Power BI</span>
+      <span class="tag">Python · Pandas</span>
+      <span class="tag">SQL · MySQL</span>
+      <span class="tag">Advanced Excel</span>
+      <span class="tag">DAX</span>
+      <span class="tag">Power Query</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View Projects →</a>
+      <a href="https://github.com/shiva-00" target="_blank" class="btn-outline">GitHub ↗</a>
+      <a href="mailto:shivakumar1b2d@gmail.com" class="btn-outline">Email me</a>
+    </div>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat-item"><span class="stat-num">2.9</span><span class="stat-label">Years Experience</span></div>
+  <div class="stat-item"><span class="stat-num">3</span><span class="stat-label">Projects Completed</span></div>
+  <div class="stat-item"><span class="stat-num">95%+</span><span class="stat-label">Reporting Accuracy</span></div>
+  <div class="stat-item"><span class="stat-num">300+</span><span class="stat-label">Records Analysed Daily</span></div>
+</div>
+
+<section id="projects">
+  <div class="section-label">// work</div>
+  <div class="section-title">Projects</div>
+  <div class="projects-grid">
+
+    <!-- POWER BI -->
+    <div class="project-card featured">
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="card-num">01 · Jan 2026 – Present</div>
+          <div class="card-title">Sales Performance Dashboard</div>
+          <span class="tool-badge badge-pbi">Power BI</span>
+        </div>
+        <span class="featured-tag">⭐ Featured</span>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">End-to-end interactive Power BI dashboard built on Superstore e-commerce data. Two-page report covering sales analysis and product-level profitability. Connected live data sources, performed transformation in Power Query, and built DAX measures for dynamic KPI tracking.</p>
+        <div class="card-kpis">
+          <span class="kpi-pill">Total Sales <strong>₹2.3M</strong></span>
+          <span class="kpi-pill">Total Profit <strong>₹286.4K</strong></span>
+          <span class="kpi-pill">Products Sold <strong>1,862</strong></span>
+          <span class="kpi-pill">Avg Order Value <strong>₹229.86</strong></span>
+        </div>
+        <div class="card-insights">
+          <p>📌 <strong>Key Insight:</strong> Technology leads category sales at ₹0.84M, with West region contributing highest revenue at ₹0.73M.</p>
+          <p>📌 <strong>Top Product:</strong> Canon imageCLASS 2200 generated ₹62K — highest among 1,862 products.</p>
+          <p>📌 <strong>Consumer segment</strong> drives 50.56% of total sales.</p>
+        </div>
+        <p style="font-size:13px; color:var(--ink-3); font-family:'JetBrains Mono',monospace;">Tools: Power BI · Power Query · DAX · Data Modeling</p>
+      </div>
+      <div class="card-footer">
+        <a href="https://github.com/shiva-00/Sales-Performance-Powerbi" target="_blank" class="card-link">↗ GitHub Repo</a>
+        <span style="color:var(--border); font-size:13px;">·</span>
+        <a href="https://github.com/shiva-00/Sales-Performance-Powerbi/raw/main/Sales_Performance.pbix" class="card-link">⬇ Download .pbix</a>
+      </div>
+    </div>
+
+    <!-- PYTHON -->
+    <div class="project-card">
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="card-num">02 · May 2025 – Present</div>
+          <div class="card-title">Employee Attrition Analysis</div>
+          <span class="tool-badge badge-py">Python · Pandas</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">End-to-end attrition analysis on IBM HR Analytics dataset (1,470 employees). Performed data cleaning, EDA, segmentation and visualizations to identify why employees leave — and what HR can do about it.</p>
+        <div class="card-kpis">
+          <span class="kpi-pill">Dataset <strong>1,470 employees</strong></span>
+          <span class="kpi-pill">Attrition Rate <strong>16.12%</strong></span>
+          <span class="kpi-pill">Charts <strong>7</strong></span>
+          <span class="kpi-pill">Recommendations <strong>6</strong></span>
+        </div>
+        <div class="card-insights">
+          <p>📌 <strong>Sales Representatives</strong> had 39.8% attrition — nearly 1 in 2 left.</p>
+          <p>📌 <strong>Overtime workers</strong> had 3x higher attrition (30.5% vs 10.4%).</p>
+          <p>📌 Employees who left earned <strong>$2,046 less per month</strong> than those who stayed.</p>
+        </div>
+        <p style="font-size:13px; color:var(--ink-3); font-family:'JetBrains Mono',monospace;">Tools: Python · Pandas · NumPy · Matplotlib · Seaborn</p>
+      </div>
+      <div class="card-footer">
+        <a href="https://github.com/shiva-00/employee-attrition-analysis" target="_blank" class="card-link">↗ GitHub Repo</a>
+      </div>
+    </div>
+
+    <!-- SQL -->
+    <div class="project-card">
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="card-num">03 · Oct 2024 – Present</div>
+          <div class="card-title">E-Commerce Sales Analysis</div>
+          <span class="tool-badge badge-sql">SQL · MySQL</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">Analysed 100,000+ real orders from Olist Brazilian E-Commerce dataset using SQL across 9 relational tables. Wrote complex queries using JOINs, aggregations, window functions and date functions to uncover revenue trends, delivery performance and customer behaviour.</p>
+        <div class="card-kpis">
+          <span class="kpi-pill">Total Revenue <strong>$16M</strong></span>
+          <span class="kpi-pill">Total Orders <strong>99,437</strong></span>
+          <span class="kpi-pill">Tables <strong>9</strong></span>
+          <span class="kpi-pill">Avg Delivery <strong>12.5 days</strong></span>
+        </div>
+        <div class="card-insights">
+          <p>📌 <strong>São Paulo</strong> accounts for 42% of all orders — massive geographic concentration.</p>
+          <p>📌 <strong>Health & Beauty</strong> is the top category at $1.44M in revenue.</p>
+          <p>📌 Revenue grew <strong>5x in 8 months</strong> during 2017.</p>
+        </div>
+        <p style="font-size:13px; color:var(--ink-3); font-family:'JetBrains Mono',monospace;">Tools: MySQL · JOINs · Aggregations · Window Functions · DATE functions</p>
+      </div>
+      <div class="card-footer">
+        <a href="https://github.com/shiva-00/ecommerce-sql-analysis" target="_blank" class="card-link">↗ GitHub Repo</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="skills" style="background: white; max-width:100%; padding: 6rem 3rem;">
+  <div style="max-width:900px; margin:0 auto;">
+    <div class="section-label">// tools</div>
+    <div class="section-title">Skills</div>
+    <div class="skills-grid">
+      <div class="skill-card"><div class="skill-icon">📊</div><div class="skill-name">Power BI</div><div class="skill-level">DAX · Power Query · Data Modeling</div><div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div>
+      <div class="skill-card"><div class="skill-icon">🐍</div><div class="skill-name">Python</div><div class="skill-level">Pandas · NumPy · EDA · Visualization</div><div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div></div>
+      <div class="skill-card"><div class="skill-icon">🗄️</div><div class="skill-name">SQL</div><div class="skill-level">MySQL · JOINs · Window Functions</div><div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div></div>
+      <div class="skill-card"><div class="skill-icon">📗</div><div class="skill-name">Advanced Excel</div><div class="skill-level">Pivot Tables · VLOOKUP · MIS Automation</div><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
+      <div class="skill-card"><div class="skill-icon">📈</div><div class="skill-name">Data Visualization</div><div class="skill-level">Dashboards · Storytelling · KPIs</div><div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div></div>
+      <div class="skill-card"><div class="skill-icon">🔧</div><div class="skill-name">Git · Jupyter</div><div class="skill-level">Version Control · Notebooks</div><div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-label">// career</div>
+  <div class="section-title">Experience</div>
+  <div class="exp-item">
+    <div class="exp-date">Aug 2023 –<br>Present</div>
+    <div>
+      <div class="exp-role">Representative, Operations</div>
+      <div class="exp-company">Concentrix · Bangalore</div>
+      <ul class="exp-points">
+        <li>Pulled and analysed 300+ daily operational records in Advanced Excel to identify performance trends</li>
+        <li>Built Excel dashboards with red-zone marking to track CSAT, AHT, resolution rate for 20+ team members</li>
+        <li>Automated daily/weekly/monthly MIS reports maintaining 95%+ accuracy through data validation</li>
+        <li>Conducted performance reviews and one-on-one sessions with Team Leads based on data insights</li>
+        <li>Delivered actionable reports supporting process optimisation and team productivity improvements</li>
+      </ul>
+    </div>
+  </div>
+  <div class="exp-item">
+    <div class="exp-date">2023</div>
+    <div>
+      <div class="exp-role">B.Tech — Computer Science Engineering</div>
+      <div class="exp-company">Anantha Lakshmi Institute of Technology & Sciences</div>
+      <ul class="exp-points">
+        <li>Graduated with 6.52 CGPA in Computer Science Engineering</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-box">
+    <div>
+      <h2>Let's work together</h2>
+      <p>Open to Data Analyst roles · Bangalore & Remote</p>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:shivakumar1b2d@gmail.com" class="contact-link">✉ shivakumar1b2d@gmail.com</a>
+      <a href="tel:+919704188546" class="contact-link">📞 +91 9704188546</a>
+      <a href="https://github.com/shiva-00" target="_blank" class="contact-link">⌥ github.com/shiva-00</a>
+    </div>
+  </div>
+</section>
+
+<footer>built by poojari shiva · data analyst · 2026</footer>
+</body>
+</html>
